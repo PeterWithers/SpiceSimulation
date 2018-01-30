@@ -44,6 +44,7 @@ script:
 - ls out
 - ls out/*
 - find out -iname *.zip
+- find out/ -type f -printf '<a href="%p">%p</a><br/>' >> out/index.html
 
 deploy:
   provider: pages

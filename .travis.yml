@@ -1,0 +1,52 @@
+language: node_js
+node_js: "6"
+os:
+- linux
+
+dist: trusty
+
+sudo: false
+
+cache:
+  directories:
+  - node_modules
+
+addons:
+  apt:
+    packages:
+    - fakeroot
+    - rpm
+
+branches:
+  only:
+  - master
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install wine mono-devel -y
+  
+install:
+- npm install
+- npm update
+
+git:
+  depth: 500
+
+script:
+- cd SpiceSimulation
+- buildVersion=$(git rev-list --count HEAD .); 
+- echo $buildVersion; 
+- sed -i -e "s/<buildVersion>/1.0.$buildVersion/" package.json
+- pwd
+- ls out
+- ls out/*
+- find out -iname *.zip
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  keep-history: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  local_dir: SpiceSimulation/out
+  on:
+    branch: master

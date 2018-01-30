@@ -23,7 +23,7 @@ branches:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install wine mono-devel -y
+  - sudo apt-get -qq install gnucap -y
   
 install:
 - npm install
@@ -33,9 +33,11 @@ git:
   depth: 500
 
 script:
-- cd SpiceSimulation
+#- cd SpiceSimulation
 - buildVersion=$(git rev-list --count HEAD .); 
-- echo $buildVersion; 
+- echo $buildVersion;
+- mkdir out
+- echo $buildVersion > out/buildversion.txt; 
 - sed -i -e "s/<buildVersion>/1.0.$buildVersion/" package.json
 - pwd
 - ls out
@@ -47,6 +49,6 @@ deploy:
   skip_cleanup: true
   keep-history: true
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-  local_dir: SpiceSimulation/out
+  local_dir: out
   on:
     branch: master

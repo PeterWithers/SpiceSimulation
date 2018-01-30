@@ -44,7 +44,8 @@ script:
 - ls out
 - ls out/*
 - find out -iname *.zip
-- find out/ -type f -not -name index.html -printf '<a href="%p">%p</a><br/>' >> out/index.html
+- cd out
+- find . -type f -not -name index.html -printf '<a href="%p">%p</a><br/>' >> index.html
 
 deploy:
   provider: pages

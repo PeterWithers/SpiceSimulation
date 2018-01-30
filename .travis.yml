@@ -38,7 +38,8 @@ script:
 - echo $buildVersion;
 - mkdir out
 - echo $buildVersion > out/buildversion.txt; 
-- sed -i -e "s/<buildVersion>/1.0.$buildVersion/" package.json
+#- sed -i -e "s/<buildVersion>/1.0.$buildVersion/" package.json
+- gnucap -b main.ckt
 - pwd
 - ls out
 - ls out/*
